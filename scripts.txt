@@ -5,3 +5,5 @@ venv\scripts\activate
 pip install fastapi uvicorn opencv-python-headless numpy ultralytics python-multipart
 
 python -m uvicorn main:app --reload
+
+uvicorn main:app --host 0.0.0.0 --port 8000
