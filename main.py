@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from ultralytics import YOLO
 import cv2
@@ -22,7 +22,12 @@ model = YOLO("yolov8n.pt")
 
 @app.post("/detect")
 async def detect_objects(file: UploadFile = File(...)):
+    
     try:
+
+        allowed_types = ["image/jpeg", "image/jpg", "image/png"]
+        if file.content_type not in allowed_types:
+            raise HTTPException(status_code=400, detail="Formato de archivo no permitido. Solo jpg, jpeg y png.")
 
         contents = await file.read()
         npimg = np.frombuffer(contents, np.uint8)
