@@ -18,7 +18,8 @@ app.add_middleware(
 def ping():
     return {"message": "API is awake!"}
 #Modelo
-model = YOLO("yolov8n.pt")
+# model = YOLO("yolov8n.pt")
+model = YOLO("yolov8n")
 
 @app.post("/detect")
 async def detect_objects(file: UploadFile = File(...)):
